@@ -1,0 +1,65 @@
+class Main {
+  public static int maxSize;//size of delimiter array
+  public static String[] stack1; //declaring the stack
+  public static int top = -1; // initial empty stack before operation
+ 
+  public static void main(String[] args) {
+    String[] array = new String[] {"(","(","(",")","("}; //example of unbalanced
+    //String[] array = new String[] {"("}; //example of overflow
+    //String[] array = new String[] {"(",")","(",")"}; //example of balanced
+    
+    String[] check = delimiterCheck(array);  //checking the pushes and pops of the array
+   
+    System.out.println(check.length + " for the length of the string array." );
+    for(int i = 0; i < check.length;i++){//-----O(n)-------
+    System.out.println(array[i]); 
+    } //The print out of the top after looking at the delimiters
+    System.out.println("Top is now "+top+".");
+    
+    if(top== -1){
+      System.out.println("Balanced.");//------O(c)-------
+    } //Balanced if top is equal to -1, or the initial condition.
+    else
+    {
+      System.out.println("Unbalanced.");
+    } // Unbalanced if top is not equal to the initial codition.
+    System.out.println("Will there be an underflow, or more popping, in your code if one more pop occurs? " + empty());
+    System.out.println("Is there a potential for an overflow, or less popping than pushing, when doing the delimiter check? " + full());
+
+  }  //Underflow and overflow questions are for testing out the extra credit conditions.
+
+
+public static String[] delimiterCheck(String[] array){
+    maxSize = array.length;
+     stack1 = new String[maxSize];
+ for(int i = 0; i < maxSize; i++){
+   if(array[i] == "("){//nested for and if is O(n ^ 2)----------------
+     push(array[i]);//push -------O(c)--------
+   }// push increases the top by 1 for a successful push operation.
+
+   if(array[i] == ")"){
+     pop();//pop ---------O(c)---------
+   }// pop decreases the top by 1 for a successful pop operation.
+
+  }
+    return stack1;
+  }
+ 
+  public static void push(String j){ //put item on top of stack
+    stack1[++top] = j;  //increments top, then inserts delimiter
+
+  }
+
+  public static String pop(){//take item from top of stack
+   return stack1[top--]; //access item, then decrement top
+  }
+
+  public static boolean empty(){
+    return (top == -1); //true if stack is empty
+  }
+
+  public static boolean full(){
+    return (top == maxSize-1);//true if stack is full
+  }
+ 
+}
